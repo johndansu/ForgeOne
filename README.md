@@ -44,13 +44,13 @@ npm install
 Server (`server/.env`):
 ```env
 # Get your connection string from Supabase Dashboard > Settings > Database > Connection string (URI)
-DATABASE_URL="postgresql://postgres.pejsyedbtsqxofnrwiyu:[YOUR-PASSWORD]@aws-0-eu-west-1.pooler.supabase.com:6543/postgres"
+DATABASE_URL="postgresql://[YOUR-DB-USER]:[YOUR-PASSWORD]@[YOUR-SUPABASE-HOST]:[PORT]/postgres"
 
-# Supabase Project Settings
-SUPABASE_URL="https://pejsyedbtsqxofnrwiyu.supabase.co"
-SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlanN5ZWRidHNxeG9mbnJ3aXl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTI0MDcsImV4cCI6MjA4MzUyODQwN30.-0r-L5NN3csw0QRr_um_tf_z5kddQ9d4ssD9e8K75UQ"
+# Supabase Project Settings - Get from Supabase Dashboard > Settings > API
+SUPABASE_URL="https://[YOUR-PROJECT-ID].supabase.co"
+SUPABASE_ANON_KEY="[YOUR-SUPABASE-ANON-KEY]"
 
-JWT_SECRET="your-super-secret-jwt-key-change-in-production"
+JWT_SECRET="[YOUR-JWT-SECRET-KEY]"
 PORT=3001
 NODE_ENV=development
 ```
