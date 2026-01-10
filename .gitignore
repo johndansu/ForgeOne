@@ -25,3 +25,7 @@ Thumbs.db
 # Prisma
 server/prisma/*.db
 server/prisma/*.db-journal
+
+# Markdown files (except README)
+*.md
+!README.md
