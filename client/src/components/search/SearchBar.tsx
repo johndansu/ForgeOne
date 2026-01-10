@@ -9,7 +9,7 @@ interface SearchBarProps {
   isLoading?: boolean;
 }
 
-export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
+export function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<string>('all');
 
