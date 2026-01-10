@@ -31,15 +31,17 @@ A **Work Memory System** that captures work as living memory — preserving cont
 - PostgreSQL 15+
 - npm or pnpm
 
-### Installation
+### Quick Start
 
-1. **Clone and install dependencies**
 ```bash
 cd forgeone
 npm install
+npm run dev
 ```
 
-2. **Set up environment variables**
+This starts both the frontend (http://localhost:5173) and backend (http://localhost:3001).
+
+### Environment Setup
 
 Server (`server/.env`):
 ```env
@@ -60,19 +62,11 @@ Client (`client/.env`):
 VITE_API_URL=http://localhost:3001/api
 ```
 
-3. **Generate Prisma client** (database tables already created in Supabase)
+Generate Prisma client:
 ```bash
 cd server
 npx prisma generate
 ```
-
-4. **Start development servers**
-```bash
-# From root directory
-npm run dev
-```
-
-This starts both the frontend (http://localhost:5173) and backend (http://localhost:3001).
 
 ## Project Structure
 
