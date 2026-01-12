@@ -54,7 +54,7 @@ function AppRoutes() {
         <Route path="/threads/:id" element={<ThreadDetailPage />} />
         <Route path="/recall" element={<RecallPage />} />
         <Route path="/insights" element={<InsightsPage />} />
-        <Route path="/app" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/app" element={<Navigate to="/home" replace />} />
       </Route>
     </Routes>
   );
