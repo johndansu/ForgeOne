@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useFlowLedger } from '@/lib/flowledger';
 import { useRecall } from '@/lib/recall';
 import { useLifeOS } from '@/lib/lifeos';
+import { TextureButton } from '@/components/ui/texture-button';
 import { 
   Plus, 
   Search, 
@@ -100,13 +101,14 @@ export function ModernForgeOne() {
                 />
               </div>
               
-              <button
+              <TextureButton
                 onClick={() => setShowCapture(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+                variant="accent"
+                className="w-auto"
               >
                 <Plus className="h-4 w-4" />
                 Capture
-              </button>
+              </TextureButton>
             </div>
           </div>
         </div>
@@ -168,19 +170,20 @@ export function ModernForgeOne() {
           {/* Quick Actions */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
-              { icon: Coffee, label: 'Coffee', color: 'bg-amber-100 text-amber-700' },
-              { icon: Briefcase, label: 'Project', color: 'bg-blue-100 text-blue-700' },
-              { icon: BookOpen, label: 'Learning', color: 'bg-green-100 text-green-700' },
-              { icon: Users, label: 'Meeting', color: 'bg-purple-100 text-purple-700' },
-            ].map(({ icon: Icon, label, color }) => (
-              <button
+              { icon: Coffee, label: 'Coffee' },
+              { icon: Briefcase, label: 'Project' },
+              { icon: BookOpen, label: 'Learning' },
+              { icon: Users, label: 'Meeting' },
+            ].map(({ icon: Icon, label }) => (
+              <TextureButton
                 key={label}
                 onClick={() => setShowCapture(true)}
-                className={`${color} p-4 rounded-xl flex flex-col items-center gap-2 hover:opacity-80 transition-opacity`}
+                variant="minimal"
+                className="h-20 flex-col"
               >
                 <Icon className="h-6 w-6" />
                 <span className="text-sm font-medium">{label}</span>
-              </button>
+              </TextureButton>
             ))}
           </div>
         </div>
@@ -195,13 +198,14 @@ export function ModernForgeOne() {
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks yet today</h3>
                 <p className="text-gray-500 mb-6">Start by capturing your first task</p>
-                <button
+                <TextureButton
                   onClick={() => setShowCapture(true)}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors"
+                  variant="accent"
+                  className="w-auto"
                 >
                   <Plus className="h-4 w-4 inline mr-2" />
                   Add Task
-                </button>
+                </TextureButton>
               </div>
             ) : (
               todayLogs.map((log) => (
@@ -295,12 +299,15 @@ export function ModernForgeOne() {
       </div>
 
       {/* Floating Action Button */}
-      <button
-        onClick={() => setShowCapture(true)}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
-      >
-        <Plus className="h-6 w-6" />
-      </button>
+      <div className="fixed bottom-6 right-6">
+        <TextureButton
+          onClick={() => setShowCapture(true)}
+          variant="primary"
+          className="w-14 h-14 rounded-full p-0"
+        >
+          <Plus className="h-6 w-6" />
+        </TextureButton>
+      </div>
     </div>
   );
 }
