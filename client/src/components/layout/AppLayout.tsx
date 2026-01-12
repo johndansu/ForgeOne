@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { PenLine, Clock, GitBranch, Search, LogOut, LayoutDashboard, Lightbulb, Home, Brain } from 'lucide-react';
+import { PenLine, Clock, GitBranch, Search, LogOut, LayoutDashboard, Lightbulb, Home, Brain, Sparkles } from 'lucide-react';
 
 export function AppLayout() {
   const { user, logout } = useAuth();
@@ -12,9 +12,10 @@ export function AppLayout() {
   };
 
   const navItems = [
-    { to: '/home', icon: Home, label: 'Home' },
+    { to: '/new', icon: Sparkles, label: 'ForgeOne' },
+    { to: '/home', icon: Home, label: 'Notion' },
     { to: '/forgeone', icon: Brain, label: 'System' },
-    { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/dashboard', icon: LayoutDashboard, label: 'Classic' },
     { to: '/today', icon: PenLine, label: 'Capture' },
     { to: '/timeline', icon: Clock, label: 'Timeline' },
     { to: '/threads', icon: GitBranch, label: 'Threads' },
