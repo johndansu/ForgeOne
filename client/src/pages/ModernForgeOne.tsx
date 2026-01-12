@@ -5,6 +5,7 @@ import { useFlowLedger } from '@/lib/flowledger';
 import { useRecall } from '@/lib/recall';
 import { useLifeOS } from '@/lib/lifeos';
 import { TextureButton } from '@/components/ui/texture-button';
+import { EmptyState } from '@/components/ui/empty-state';
 import { 
   Plus, 
   Search, 
@@ -15,7 +16,10 @@ import {
   Coffee,
   BookOpen,
   Briefcase,
-  Heart
+  Heart,
+  Sparkles,
+  TrendingUp,
+  Calendar
 } from 'lucide-react';
 
 export function ModernForgeOne() {
@@ -192,21 +196,15 @@ export function ModernForgeOne() {
         {activeView === 'today' && (
           <div className="space-y-4">
             {todayLogs.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-gray-400 mb-4">
-                  <Target className="h-12 w-12 mx-auto" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No tasks yet today</h3>
-                <p className="text-gray-500 mb-6">Start by capturing your first task</p>
-                <TextureButton
-                  onClick={() => setShowCapture(true)}
-                  variant="accent"
-                  className="w-auto"
-                >
-                  <Plus className="h-4 w-4 inline mr-2" />
-                  Add Task
-                </TextureButton>
-              </div>
+              <EmptyState
+                title="Start Your Productivity Journey"
+                description="Capture your first task to begin building your work memory. Every task contributes to your personal productivity insights."
+                icons={[Target, Sparkles, TrendingUp]}
+                action={{
+                  label: "Add Your First Task",
+                  onClick: () => setShowCapture(true)
+                }}
+              />
             ) : (
               todayLogs.map((log) => (
                 <div key={log.id} className="bg-white border rounded-xl p-4 hover:shadow-lg transition-shadow">
@@ -237,7 +235,18 @@ export function ModernForgeOne() {
 
         {activeView === 'recent' && (
           <div className="space-y-4">
-            {workLogs.slice(0, 10).map((log) => (
+            {workLogs.length === 0 ? (
+              <EmptyState
+                title="No Work History Yet"
+                description="Your recent activities will appear here once you start capturing tasks. Build your work history one task at a time."
+                icons={[Calendar, Briefcase, Target]}
+                action={{
+                  label: "Capture Your First Task",
+                  onClick: () => setShowCapture(true)
+                }}
+              />
+            ) : (
+              workLogs.slice(0, 10).map((log) => (
               <div key={log.id} className="bg-white border rounded-xl p-4 hover:shadow-lg transition-shadow">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -259,41 +268,54 @@ export function ModernForgeOne() {
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+            )}
           </div>
         )}
 
         {activeView === 'memories' && (
           <div className="space-y-4">
-            {memoryAnchors.slice(0, 10).map((anchor) => (
-              <div key={anchor.id} className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs font-medium text-blue-700">
-                    <Star className="h-3 w-3" />
-                    {anchor.type}
-                  </span>
-                  <span className="text-xs text-gray-500">
-                    {anchor.timestamp.toLocaleDateString()}
-                  </span>
-                </div>
-                <p className="text-gray-800">{anchor.content}</p>
-                <div className="mt-2 flex items-center gap-2">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-3 w-3 ${
-                          i < Math.floor(anchor.importance / 2)
-                            ? 'text-yellow-400 fill-current'
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
+            {memoryAnchors.length === 0 ? (
+              <EmptyState
+                title="No Memory Anchors Yet"
+                description="Important decisions, insights, and milestones will automatically appear here as you capture your work. Your personal memory timeline builds over time."
+                icons={[Star, Sparkles, Heart]}
+                action={{
+                  label: "Start Building Memories",
+                  onClick: () => setShowCapture(true)
+                }}
+              />
+            ) : (
+              memoryAnchors.slice(0, 10).map((anchor) => (
+                <div key={anchor.id} className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs font-medium text-blue-700">
+                      <Star className="h-3 w-3" />
+                      {anchor.type}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      {anchor.timestamp.toLocaleDateString()}
+                    </span>
                   </div>
-                  <span className="text-xs text-gray-500">Importance: {anchor.importance}/10</span>
+                  <p className="text-gray-800">{anchor.content}</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-3 w-3 ${
+                            i < Math.floor(anchor.importance / 2)
+                              ? 'text-yellow-400 fill-current'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs text-gray-500">Importance: {anchor.importance}/10</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         )}
       </div>
