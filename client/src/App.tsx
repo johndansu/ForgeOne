@@ -4,6 +4,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { ForgeOneDashboard } from './pages/ForgeOneDashboard';
+import { NotionDashboard } from './pages/NotionDashboard';
 import { Today } from './pages/Today';
 import { TimelinePage } from './pages/TimelinePage';
 import { ThreadsPage } from './pages/ThreadsPage';
@@ -46,6 +47,7 @@ function AppRoutes() {
       >
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/forgeone" element={<ForgeOneDashboard />} />
+        <Route path="/home" element={<NotionDashboard />} />
         <Route path="/today" element={<Today />} />
         <Route path="/timeline" element={<TimelinePage />} />
         <Route path="/threads" element={<ThreadsPage />} />
