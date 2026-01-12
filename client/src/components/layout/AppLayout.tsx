@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { PenLine, Clock, GitBranch, Search, LogOut, LayoutDashboard, Lightbulb, Home, Brain, Sparkles } from 'lucide-react';
+import { LogOut, Plus, Target } from 'lucide-react';
 
 export function AppLayout() {
   const { user, logout } = useAuth();
@@ -11,47 +11,45 @@ export function AppLayout() {
     navigate('/login');
   };
 
-  const navItems = [
-    { to: '/new', icon: Sparkles, label: 'ForgeOne' },
-    { to: '/home', icon: Home, label: 'Notion' },
-    { to: '/forgeone', icon: Brain, label: 'System' },
-    { to: '/dashboard', icon: LayoutDashboard, label: 'Classic' },
-    { to: '/today', icon: PenLine, label: 'Capture' },
-    { to: '/timeline', icon: Clock, label: 'Timeline' },
-    { to: '/threads', icon: GitBranch, label: 'Threads' },
-    { to: '/recall', icon: Search, label: 'Recall' },
-    { to: '/insights', icon: Lightbulb, label: 'Insights' },
-  ];
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-lg border-b">
+        <div className="max-w-4xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
             {/* Logo */}
-            <NavLink to="/today" className="text-xl font-semibold text-gray-800">
+            <NavLink to="/app" className="text-xl font-bold text-gray-900">
               ForgeOne
             </NavLink>
 
             {/* Navigation */}
             <nav className="flex items-center gap-1">
-              {navItems.map(({ to, icon: Icon, label }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                    }`
-                  }
-                >
-                  <Icon size={18} />
-                  <span className="hidden sm:inline">{label}</span>
-                </NavLink>
-              ))}
+              <NavLink
+                to="/app"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-gray-100 text-gray-900'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                  }`
+                }
+              >
+                <Target size={18} />
+                <span>Home</span>
+              </NavLink>
+              <NavLink
+                to="/capture"
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-gray-100 text-gray-900'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                  }`
+                }
+              >
+                <Plus size={18} />
+                <span>Capture</span>
+              </NavLink>
             </nav>
 
             {/* User menu */}
