@@ -40,6 +40,7 @@ function AppRoutes() {
       >
         <Route path="/" element={<ModernForgeOne />} />
         <Route path="/app" element={<ModernForgeOne />} />
+        <Route path="/forgeone" element={<ModernForgeOne />} />
         <Route path="/capture" element={<CapturePage />} />
       </Route>
     </Routes>
