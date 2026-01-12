@@ -1,15 +1,21 @@
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogOut, Plus, Target } from 'lucide-react';
 
 export function AppLayout() {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
   };
+
+  // Don't show navigation for ModernForgeOne page (it has its own)
+  const isModernForgeOne = location.pathname === '/app' || location.pathname === '/forgeone' || location.pathname === '/';
+
+  if (isModernForgeOne) {
+    return <Outlet />;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -18,38 +24,26 @@ export function AppLayout() {
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <NavLink to="/app" className="text-xl font-bold text-gray-900">
+            <a href="/app" className="text-xl font-bold text-gray-900">
               ForgeOne
-            </NavLink>
+            </a>
 
             {/* Navigation */}
             <nav className="flex items-center gap-1">
-              <NavLink
-                to="/app"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                  }`
-                }
+              <a
+                href="/app"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               >
                 <Target size={18} />
                 <span>Home</span>
-              </NavLink>
-              <NavLink
-                to="/capture"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                  }`
-                }
+              </a>
+              <a
+                href="/capture"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               >
                 <Plus size={18} />
                 <span>Capture</span>
-              </NavLink>
+              </a>
             </nav>
 
             {/* User menu */}
