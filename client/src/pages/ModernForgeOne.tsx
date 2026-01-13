@@ -6,6 +6,9 @@ import { useRecall } from '@/lib/recall';
 import { useLifeOS } from '@/lib/lifeos';
 import { TextureButton } from '@/components/ui/texture-button';
 import { EmptyState } from '@/components/ui/empty-state';
+import { NotionEditor } from '@/components/notion-editor';
+import { NotionKanban } from '@/components/notion-kanban';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 import { 
   Plus, 
   Search, 
@@ -29,6 +32,20 @@ export function ModernForgeOne() {
   const [activeView, setActiveView] = useState('today');
   const [showCapture, setShowCapture] = useState(false);
   const [captureText, setCaptureText] = useState('');
+  
+  // Notion-like features state
+  const [editorBlocks, setEditorBlocks] = useState<any[]>([
+    { id: '1', type: 'heading1', content: 'Welcome to ForgeOne' },
+    { id: '2', type: 'text', content: 'Start capturing your work to build your personal productivity system.' },
+    { id: '3', type: 'bullet', content: 'Type "/" for commands to add different block types' },
+  ]);
+  
+  const [kanbanTasks, setKanbanTasks] = useState<any[]>([
+    { id: '1', title: 'Review project documentation', status: 'todo', priority: 'medium' },
+    { id: '2', title: 'Implement new feature', status: 'in-progress', priority: 'high' },
+    { id: '3', title: 'Write tests', status: 'todo', priority: 'low' },
+    { id: '4', title: 'Deploy to production', status: 'done', priority: 'high' },
+  ]);
 
   const todayLogs = workLogs.filter(log => 
     log.timestamp.toDateString() === new Date().toDateString()
@@ -79,7 +96,7 @@ export function ModernForgeOne() {
             <div className="flex items-center gap-4">
               <h1 className="text-xl font-bold">ForgeOne</h1>
               <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
-                {['today', 'recent', 'memories'].map((view) => (
+                {['today', 'recent', 'memories', 'notes', 'kanban', 'table'].map((view) => (
                   <button
                     key={view}
                     onClick={() => setActiveView(view)}
@@ -316,6 +333,72 @@ export function ModernForgeOne() {
                 </div>
               ))
             )}
+          </div>
+        )}
+
+        {activeView === 'notes' && (
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white border rounded-lg shadow-sm p-6">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Notion-like Notes</h3>
+                <p className="text-sm text-gray-600">Type "/" to see commands, or just start typing. Drag blocks to reorder.</p>
+              </div>
+              <NotionEditor blocks={editorBlocks} onChange={setEditorBlocks} />
+            </div>
+          </div>
+        )}
+
+        {activeView === 'kanban' && (
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Kanban Board</h3>
+              <p className="text-sm text-gray-600">Drag tasks between columns to update their status.</p>
+            </div>
+            <NotionKanban tasks={kanbanTasks} onTasksChange={setKanbanTasks} />
+          </div>
+        )}
+
+        {activeView === 'table' && (
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Data Table</h3>
+              <p className="text-sm text-gray-600">Interactive table with your work data.</p>
+            </div>
+            <div className="bg-white border rounded-lg shadow-sm">
+              <Table>
+                <thead>
+                  <TableRow>
+                    <TableHead>Task</TableHead>
+                    <TableHead>Category</TableHead>
+                    <TableHead>Time</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Date</TableHead>
+                  </TableRow>
+                </thead>
+                <TableBody>
+                  {workLogs.slice(0, 10).map((log) => (
+                    <TableRow key={log.id}>
+                      <TableCell className="font-medium">{log.what}</TableCell>
+                      <TableCell>
+                        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${getCategoryColor(log.category)}`}>
+                          {getCategoryIcon(log.category)}
+                          {log.category}
+                        </span>
+                      </TableCell>
+                      <TableCell>{log.time} min</TableCell>
+                      <TableCell>
+                        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${
+                          log.outcome === 'completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                        }`}>
+                          {log.outcome}
+                        </span>
+                      </TableCell>
+                      <TableCell>{log.timestamp.toLocaleDateString()}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         )}
       </div>
