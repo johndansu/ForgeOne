@@ -9,6 +9,10 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { NotionEditor } from '@/components/notion-editor';
 import { NotionKanban } from '@/components/notion-kanban';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
+import { UniversalSearch } from '@/components/universal-search';
+import { FileAttachments } from '@/components/file-attachments';
+import { MobileApp } from '@/components/mobile-app';
+import { CalendarIntegration } from '@/components/calendar-integration';
 import { 
   Plus, 
   Search, 
@@ -46,6 +50,9 @@ export function ModernForgeOne() {
     { id: '3', title: 'Write tests', status: 'todo', priority: 'low' },
     { id: '4', title: 'Deploy to production', status: 'done', priority: 'high' },
   ]);
+
+  // New features state
+  const [attachments, setAttachments] = useState<any[]>([]);
 
   const todayLogs = workLogs.filter(log => 
     log.timestamp.toDateString() === new Date().toDateString()
@@ -96,7 +103,7 @@ export function ModernForgeOne() {
             <div className="flex items-center gap-4">
               <h1 className="text-xl font-bold">ForgeOne</h1>
               <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
-                {['today', 'recent', 'memories', 'notes', 'kanban', 'table'].map((view) => (
+                {['today', 'recent', 'memories', 'notes', 'kanban', 'table', 'search', 'files', 'mobile', 'calendar'].map((view) => (
                   <button
                     key={view}
                     onClick={() => setActiveView(view)}
@@ -399,6 +406,79 @@ export function ModernForgeOne() {
                 </TableBody>
               </Table>
             </div>
+          </div>
+        )}
+
+        {activeView === 'search' && (
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Universal Search</h3>
+              <p className="text-sm text-gray-600">Search across all your content - work logs, memories, people, and more.</p>
+            </div>
+            <div className="bg-white border rounded-lg shadow-sm p-6">
+              <UniversalSearch
+                placeholder="Search everything..."
+                onResultClick={(result) => {
+                  console.log('Search result clicked:', result);
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {activeView === 'files' && (
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">File Attachments</h3>
+              <p className="text-sm text-gray-600">Upload and manage files related to your work.</p>
+            </div>
+            <div className="bg-white border rounded-lg shadow-sm p-6">
+              <FileAttachments
+                attachments={attachments}
+                onAdd={(files) => {
+                  const newAttachments = files.map(file => ({
+                    id: Date.now().toString() + Math.random(),
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    url: URL.createObjectURL(file),
+                    uploadedAt: new Date()
+                  }));
+                  setAttachments([...attachments, ...newAttachments]);
+                }}
+                onRemove={(id) => {
+                  setAttachments(attachments.filter(att => att.id !== id));
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {activeView === 'mobile' && (
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Mobile Experience</h3>
+              <p className="text-sm text-gray-600">Install ForgeOne on your mobile device for capture on the go.</p>
+            </div>
+            <MobileApp
+              onInstall={() => {
+                console.log('Mobile app installed');
+              }}
+            />
+          </div>
+        )}
+
+        {activeView === 'calendar' && (
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Calendar Integration</h3>
+              <p className="text-sm text-gray-600">Connect your calendar to sync meetings and tasks.</p>
+            </div>
+            <CalendarIntegration
+              onSync={(events) => {
+                console.log('Calendar events synced:', events);
+              }}
+            />
           </div>
         )}
       </div>
