@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { Plus, Search, Calendar, FileText, Users, X, Target, Star, Heart } from 'lucide-react';
 import { TextureButton } from '@/components/ui/texture-button';
-import { NotionEditor } from '@/components/notion-editor';
-import { NotionKanban } from '@/components/notion-kanban';
+import { ForgeOneEditor } from '@/components/forgeone-editor';
+import { ForgeOneKanban } from '@/components/forgeone-kanban';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Sparkles, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -29,10 +29,10 @@ export function SmartContent({ activeView, className }: SmartContentProps) {
     { id: '3', type: 'bullet', content: 'Type "/" for commands to add different block types' },
   ]);
   const [kanbanTasks, setKanbanTasks] = useState<any[]>([
-    { id: '1', title: 'Review project documentation', status: 'todo', priority: 'medium' },
+    { id: '1', title: 'Review project documentation', status: 'backlog', priority: 'medium' },
     { id: '2', title: 'Implement new feature', status: 'in-progress', priority: 'high' },
-    { id: '3', title: 'Write tests', status: 'todo', priority: 'low' },
-    { id: '4', title: 'Deploy to production', status: 'done', priority: 'high' },
+    { id: '3', title: 'Write tests', status: 'planned', priority: 'low' },
+    { id: '4', title: 'Deploy to production', status: 'completed', priority: 'high' },
   ]);
 
   const todayLogs = workLogs.filter(log => 
@@ -267,10 +267,10 @@ export function SmartContent({ activeView, className }: SmartContentProps) {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white border rounded-xl p-6">
               <div className="mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Notion-like Notes</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">ForgeOne Notes</h3>
                 <p className="text-sm text-gray-600">Type "/" to see commands, or just start typing.</p>
               </div>
-              <NotionEditor blocks={editorBlocks} onChange={setEditorBlocks} />
+              <ForgeOneEditor blocks={editorBlocks} onChange={setEditorBlocks} />
             </div>
           </div>
         );
@@ -279,10 +279,10 @@ export function SmartContent({ activeView, className }: SmartContentProps) {
         return (
           <div className="max-w-7xl mx-auto">
             <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Kanban Board</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">ForgeOne Kanban</h3>
               <p className="text-sm text-gray-600">Drag tasks between columns to update their status.</p>
             </div>
-            <NotionKanban tasks={kanbanTasks} onTasksChange={setKanbanTasks} />
+            <ForgeOneKanban tasks={kanbanTasks} onTasksChange={setKanbanTasks} />
           </div>
         );
 
